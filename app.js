@@ -19,7 +19,7 @@ app.use(expressValidator());
 let todoIdx = 0;
 let context = {
  todos: [
-   'Wash the car', 'Take out trash', 'Feed the Dog', 'Check Email'
+   'Wash the car', 'Take out trash', 'Feed the Dog', 'Check Email', 'Make the bed'
  ],
  todoId: function() {
    return todoIdx++;
@@ -37,6 +37,10 @@ app.get("/", function (req, res) {
 app.post('/', (req, res) => {
   var todos = context.todos;
   todos.push(req.body.newTodo);
+  res.redirect('/');
+});
+
+app.post('/', (req, res)=>{
   res.redirect('/');
 });
 
