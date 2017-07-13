@@ -44,7 +44,4 @@ app.post('/', (req, res)=>{
   res.redirect('/');
 });
 
-app.listen(3000, function(req, res){
-  console.log('Application has been initilized.');
-
-});
+app.listen(process.env.PORT || 3000;
