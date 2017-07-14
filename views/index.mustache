@@ -42,8 +42,8 @@
      <ul>
        {{#todos}}
          <li>
-           <form class="" action="/" method="post">
-             <button type="true/false" name="">Mark Complete</button>{{.}}
+           <form class="" action="/complete/{{id}}" method="post">
+             <input type="submit" value="Mark Completed">{{.}}
            </form>
          </li>
        {{/todos}}
@@ -52,16 +52,18 @@
  </div>
 
  <div class="completedTodos">
-   <form class="" action="index.html" method="post">
+
      <h3>Completed Todos</h3>
      <ul>
        {{#completedTodos}}
          <li>
-           <button type="true/false" name="">Delete</button>{{.}}
+           <form class="" action="/delete/{{completedId}}" method="post">
+             <input type="submit" value="Delete">{{.}}
+           </form>
          </li>
        {{/completedTodos}}
      </ul>
-   </form>
+
  </div>
 </body>
 

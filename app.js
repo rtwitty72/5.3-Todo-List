@@ -16,32 +16,53 @@ app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({extended: false}));
 app.use(expressValidator());
 
-let todoIdx = 0;
-let context = {
- todos: [
-   'Wash the car', 'Take out trash', 'Feed the Dog', 'Check Email', 'Make the bed'
- ],
- todoId: function() {
-   return todoIdx++;
- },
- completedTodos: ['Made the bed'],
- completedId: function(){
-   return todoIdx++;
- }
-};
+let todos = ['Wash the car', 'Take out trash', 'Feed the Dog', 'Check Email', 'Make the bed'];
+let completedTodos = [];
 
+// reder todos & completed todos to the DOM
 app.get("/", function (req, res) {
+  let idx = 0;
+  let completedIdx = 0;
+  let context = {
+    todos: todos,
+    completedTodos: completedTodos,
+    id: function() {
+      return idx++;
+    },
+    completedId: function() {
+      return completedIdx++;
+    }
+  };
+  console.log('context', context);
   res.render('index', context);
 });
 
+// adds a new todo
 app.post('/', (req, res) => {
-  var todos = context.todos;
   todos.push(req.body.newTodo);
   res.redirect('/');
 });
 
-app.post('/', (req, res)=>{
+// mark a todo complete
+app.post('/complete/:id', (req, res)=>{
+  let index = req.params.id;
+  // grab the individual todo from the todos array
+  let todo = todos[index];
+  // remove the individual todo from the todos array using splice method
+  todos.splice(index, 1);
+  // add individual todo to the completed todos array
+  completedTodos.push(todo);
   res.redirect('/');
 });
 
-app.listen(process.env.PORT || 3000;
+// delete a todo
+app.post('/delete/:id', (req, res)=>{
+  let index = req.params.id;
+  completedTodos.splice(index, 1);
+  res.redirect('/');
+});
+
+app.listen(3000, function(req, res){
+  console.log('Application has been initilized.');
+
+});
